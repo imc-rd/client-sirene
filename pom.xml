@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.imcfr.imc.java</groupId>
+	<artifactId>sirene-client-racine</artifactId>
+	<version>0.0.0</version>
+	<packaging>pom</packaging>
+
+	<name>Client sirene : RACINE</name>
+
+	<properties>
+		<repo.build.name>ImcBuild</repo.build.name>
+		<repo.snap.name>ImcSnapshot</repo.snap.name>
+		<repo.binary.name>ImcBinary</repo.binary.name>
+		<repo.source.name>ImcSource</repo.source.name>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<modules>
+		<module>sirene-client</module>
+		<module>sirene-client-springboot-starter-parent</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.4.0.905</version>
+				<configuration>
+					<sonar.language>java</sonar.language>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>RepoBuild</id>
+			<name>Gestionnaire des binaires pour les builds</name>
+			<url>http://repository.imc-fr.com/content/repositories/${repo.build.name}</url>
+		</repository>
+		<snapshotRepository>
+			<id>RepoSnapshot</id>
+			<name>Gestionnaire des binaires pour les snapshots</name>
+			<url>http://repository.imc-fr.com/content/repositories/${repo.snap.name}</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+</project>
