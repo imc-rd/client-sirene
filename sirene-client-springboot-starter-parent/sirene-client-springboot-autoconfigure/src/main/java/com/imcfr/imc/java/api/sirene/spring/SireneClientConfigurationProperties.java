@@ -11,7 +11,7 @@ public class SireneClientConfigurationProperties {
 	private String url;
 	private Integer timeout;
 	private String tokenRefreshUrl;
-	private String tokenValidity;
+	private Integer tokenValidity;
 	private String consumerKey;
 	private String consumerSecret;
 
@@ -47,11 +47,11 @@ public class SireneClientConfigurationProperties {
 		this.tokenRefreshUrl = tokenRefreshUrl;
 	}
 
-	public String getTokenValidity() {
+	public Integer getTokenValidity() {
 		return tokenValidity;
 	}
 
-	public void setTokenValidity(String tokenValidity) {
+	public void setTokenValidity(Integer tokenValidity) {
 		this.tokenValidity = tokenValidity;
 	}
 

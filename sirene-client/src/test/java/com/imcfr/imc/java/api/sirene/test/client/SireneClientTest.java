@@ -21,7 +21,7 @@ public class SireneClientTest {
 	private static final String sireneUrl = "https://api.insee.fr/entreprises/sirene/V3";
 	private static final Integer sireneTimeout = 5000;
 	private static final String sirenTokenRefreshUrl = "https://api.insee.fr";
-	private static final String sireneTokenValidity = "120";
+        private static final Integer sireneTokenValidity = 120;
 	private static String sireneConsumerKey = null;
 	private static String sireneConsumerSecret = null;
 	

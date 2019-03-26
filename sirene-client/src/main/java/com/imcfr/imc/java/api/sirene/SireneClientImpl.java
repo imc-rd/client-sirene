@@ -32,7 +32,6 @@ public class SireneClientImpl implements SireneClient {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SireneClientImpl.class);
 	private static final String TOKEN_PREFIX = "Bearer ";
 	private static final String HEADER_AUTHORIZATION = "Authorization";
-	private static final String DEFAULT_TOKEN_VALIDITY = "86400";
 
 	public static final String ERROR_MESSAGE_INVALID_SIRET = "Le siret %s est invalide";
 	public static final String ERROR_MESSAGE_SIRET_NULL_OR_EMPTY = "Le siret est null ou vide";
@@ -66,7 +65,7 @@ public class SireneClientImpl implements SireneClient {
 	 *                               initialization
 	 */
 	public SireneClientImpl(String sireneUrl, Integer sireneTimeout, String sirenTokenRefreshUrl,
-			String sireneTokenValidity, String sireneConsumerKey, String sireneConsumerSecret)
+			Integer sireneTokenValidity, String sireneConsumerKey, String sireneConsumerSecret)
 			throws MalformedURLException, SireneClientException {
 		Objects.requireNonNull(sireneUrl, "Sirene URL must not be null");
 		Objects.requireNonNull(sireneUrl, "Sirene timeout must not be null");
@@ -86,13 +85,7 @@ public class SireneClientImpl implements SireneClient {
 		Map<String, String> sireneTokenParamsTemp = new HashMap<>();
 		sireneTokenParamsTemp.put("grant_type", "client_credentials");
 
-		try {
-			Integer.parseInt(sireneTokenValidity);
-		} catch (NumberFormatException e) {
-			sireneTokenValidity = DEFAULT_TOKEN_VALIDITY;
-		}
-
-		sireneTokenParamsTemp.put("validity_period", sireneTokenValidity);
+		sireneTokenParamsTemp.put("validity_period", sireneTokenValidity.toString());
 		sireneTokenParams = Collections.unmodifiableMap(sireneTokenParamsTemp);
 
 		revokeToken();
