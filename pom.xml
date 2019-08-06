@@ -10,11 +10,18 @@
 
 	<name>Client sirene : RACINE</name>
 
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
+
 	<properties>
 		<repo.build.name>ImcBuild</repo.build.name>
 		<repo.snap.name>ImcSnapshot</repo.snap.name>
 		<repo.binary.name>ImcBinary</repo.binary.name>
-		<repo.source.name>ImcSource</repo.source.name>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -42,20 +49,74 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>1.16</version>
+				<configuration>
+					<includes>
+						<include>**/*.java</include>
+						<include>**/*.properties</include>
+						<include>**/*.jsp*</include>
+						<include>**/*.css</include>
+						<include>**/*.html</include>
+						<include>**/*.js</include>
+					</includes>
+					<inceptionYear>2019</inceptionYear>
+					<organizationName>Items Média Concept</organizationName>
+					<licenseName>apache_v2</licenseName>
+					<projectName>Client-Sirene</projectName>
+				</configuration>
+
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.doxia</groupId>
+						<artifactId>doxia-core</artifactId>
+						<version>1.6</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.maven.doxia</groupId>
+						<artifactId>doxia-site-renderer</artifactId>
+						<version>1.6</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 	</build>
 
-	<distributionManagement>
-		<repository>
-			<id>RepoBuild</id>
-			<name>Gestionnaire des binaires pour les builds</name>
-			<url>http://repository.imc-fr.com/content/repositories/${repo.build.name}</url>
-		</repository>
-		<snapshotRepository>
-			<id>RepoSnapshot</id>
-			<name>Gestionnaire des binaires pour les snapshots</name>
-			<url>http://repository.imc-fr.com/content/repositories/${repo.snap.name}</url>
-		</snapshotRepository>
-	</distributionManagement>
+	<developers>
+		<developer>
+			<id>esamson</id>
+			<name>Etienne Samson</name>
+			<email>etienne.samson@imc-fr.com</email>
+			<organization>Items Média concept</organization>
+			<organizationUrl>http://www.imc-fr.com</organizationUrl>
+		</developer>
+		<developer>
+			<id>lbenoit</id>
+			<name>Lilian Benoit</name>
+			<email>lilian.benoit@imc-fr.com</email>
+			<organization>Items Média concept</organization>
+			<organizationUrl>http://www.imc-fr.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<profiles>
+		<profile>
+			<id>referentiel-projet</id>
+			<distributionManagement>
+				<repository>
+					<id>RepoBuild</id>
+					<name>Gestionnaire des binaires pour les builds</name>
+					<url>http://repository.imc-fr.com/content/repositories/${repo.build.name}</url>
+				</repository>
+				<snapshotRepository>
+					<id>RepoSnapshot</id>
+					<name>Gestionnaire des binaires pour les snapshots</name>
+					<url>http://repository.imc-fr.com/content/repositories/${repo.snap.name}</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+	</profiles>
 
 </project>
