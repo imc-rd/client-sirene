@@ -1,0 +1,95 @@
+= Client-Sirene
+
+image:https://img.shields.io/badge/licence-APACHE--2-blue.svg[APACHE v2 License, link=#copyright]
+
+Cette librairie correspond à une implémentation Java d'un client de l'API SIRENE V3
+
+Plus d'informations sur le API SIRENE sur le https://api.insee.fr/catalogue/site/themes/wso2/subthemes/insee/pages/item-info.jag?name=Sirene&version=V3&provider=insee[site INSEE]
+
+
+
+== Installation
+
+Deux variables d'environnement ou propriété doit être passée
+
+ - sirene-client.consumer-key
+ - sirene-client.consumer-secret
+
+Respectivement, cela correspond à la key et secret obtenu lors de la création d'un compte
+
+[source,bash]
+----
+mvn package -Dsirene-client.consumer-key=.... -Dsirene-client.consumer-secret=....
+----
+
+== Configuration simple
+
+La librairie sirene-client est une librairie Java simple ayant peu de dépendances.
+
+[source,java]
+----
+SireneClient sireneClient = new SireneClientImpl(sireneUrl, sireneTimeout, ...);
+sireneClient.getBySiret("11111111111111111");
+----
+
+== Configuration avec spring-boot
+
+Les différents projets springboot permettent l'intégration au sein d'une application basée sur spring-boot
+
+
+- Dépendance dans le *pom.xml* du projet
+
+[source,xml]
+----
+<dependency>
+   <groupId>com.imcfr.imc.java</groupId>
+   <artifactId>sirene-client-springboot-starter</artifactId>
+   <version>${client-sirene.starter.version}</version>
+</dependency>
+----
+
+- Propriétés de configuration
+
+[source,property]
+----
+# CONFIGURATION API SIRENE
+sirene-client.url=https://api.insee.fr/entreprises/sirene/V3
+sirene-client.consumer-key=...
+sirene-client.consumer-secret=...
+sirene-client.token-refresh-url:https://api.insee.fr
+sirene-client.token-validity:86400
+sirene-client.timeout:5000
+----
+
+[cols="1s,3"]
+|===
+|*Propriété* | *Description*
+
+|sirene-client.url
+|URL de l'API SIRENE V3
+
+|sirene-client.consumer-key
+|Key du compte associé à l'API SIRENE
+
+|sirene-client.consumer-secret
+|Secret du compte associé à l'API SIRENE
+
+|sirene-client.token-refresh-url
+|URL pour le raifraichissement du token
+
+|sirene-client.token-validity
+|Durée de validité du token
+
+|sirene-client.timeout
+|Timeout lors de l'appel aux requêtes HTTP
+
+|===
+
+
+== Copyright
+
+Copyright (C) 2019 Items Média Concept.
+Free use of this software is granted under the terms of the Apache v2 License.
+
+For the full text of the license, see the <<LICENSE.txt#,LICENSE>> file.
+
