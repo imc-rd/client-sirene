@@ -52,6 +52,7 @@ public class SireneClientAutoconfigurationTest {
 	public void testWithSireneClientProperties() {
 		EnvironmentTestUtils.addEnvironment(this.context, 
 				"sirene-client.enable:true",
+				"sirene-client.initialize-on-startup:true",
 				"sirene-client.url:https://api.insee.fr/entreprises/sirene/V3", 
 				"sirene-client.timeout:5000",
 				"sirene-client.token-refresh-url:https://api.insee.fr", 

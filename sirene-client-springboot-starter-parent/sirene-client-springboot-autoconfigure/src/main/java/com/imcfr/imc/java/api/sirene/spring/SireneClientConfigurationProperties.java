@@ -28,6 +28,7 @@ public class SireneClientConfigurationProperties {
 	public static final String SIRENE_CLIENT_PREFIX = "sirene-client";
 
 	private Boolean enable = true;
+	private boolean initializeTokenOnStartup = true;
 	private String url;
 	private Integer timeout;
 	private String tokenRefreshUrl;
@@ -41,6 +42,14 @@ public class SireneClientConfigurationProperties {
 
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
+	}
+
+	public boolean getInitializeTokenOnStartup() {
+		return initializeTokenOnStartup;
+	}
+
+	public void setInitializeTokenOnStartup(boolean initializeTokenOnStartup) {
+		this.initializeTokenOnStartup = initializeTokenOnStartup;
 	}
 
 	public String getUrl() {

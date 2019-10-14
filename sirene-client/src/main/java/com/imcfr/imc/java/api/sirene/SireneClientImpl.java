@@ -79,14 +79,16 @@ public class SireneClientImpl implements SireneClient {
 	 * @param sireneTokenValidity  the SIRENE API desired maximum token validity
 	 * @param sireneConsumerKey    the SIRENE API consumer key
 	 * @param sireneConsumerSecret the SIRENE API consumer secret key
+	 * @param initializeOnStartup  whether or not the token must be recover from the
+	 *                             SIRENE API at starup
 	 * @throws MalformedURLException if an exception occurred when preparing SIRENE
 	 *                               URLs
 	 * @throws SireneClientException if an exception occurred during the token
 	 *                               initialization
 	 */
 	public SireneClientImpl(String sireneUrl, Integer sireneTimeout, String sirenTokenRefreshUrl,
-			Integer sireneTokenValidity, String sireneConsumerKey, String sireneConsumerSecret)
-			throws MalformedURLException, SireneClientException {
+			Integer sireneTokenValidity, String sireneConsumerKey, String sireneConsumerSecret,
+			boolean initializeOnStartup) throws MalformedURLException, SireneClientException {
 		Objects.requireNonNull(sireneUrl, "Sirene URL must not be null");
 		Objects.requireNonNull(sireneUrl, "Sirene timeout must not be null");
 		Objects.requireNonNull(sireneUrl, "Sirene token refresh URL must not be null");
@@ -108,8 +110,10 @@ public class SireneClientImpl implements SireneClient {
 		sireneTokenParamsTemp.put("validity_period", sireneTokenValidity.toString());
 		sireneTokenParams = Collections.unmodifiableMap(sireneTokenParamsTemp);
 
-		revokeToken();
-		getOrRefreshToken();
+		if (initializeOnStartup) {
+			revokeToken();
+			getOrRefreshToken();
+		}
 	}
 
 	@Override
@@ -140,7 +144,7 @@ public class SireneClientImpl implements SireneClient {
 			response = executeGet(url, true, sireneTimeout, sireneTimeout, headers, null);
 		} catch (Exception e) {
 			if (e.getCause() instanceof FileNotFoundException) {
-				if (LOGGER.isInfoEnabled())
+				if (LOGGER.isErrorEnabled())
 					LOGGER.error(String.format(MESSAGE_SIRET_UNKNOWN, siret));
 				return null;
 			} else if (e.getCause() instanceof IOException) {
@@ -309,5 +313,5 @@ public class SireneClientImpl implements SireneClient {
 	public String getBearerToken() {
 		return bearerToken;
 	}
-	
+
 }

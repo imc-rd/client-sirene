@@ -52,6 +52,10 @@ public class SireneClientTest {
 	
 	@Before
 	public void setUp() throws MalformedURLException, SireneClientException {
+		prepareSireneClient(true);
+	}
+
+	private void prepareSireneClient(boolean initializeBearer) throws MalformedURLException, SireneClientException {
 		sireneConsumerKey = System.getProperty("sirene-client.consumer-key");
 		if (sireneConsumerKey == null) {
 			sireneConsumerKey = System.getenv("sirene-client.consumer-key");
@@ -62,7 +66,7 @@ public class SireneClientTest {
 			sireneConsumerSecret = System.getenv("sirene-client.consumer-secret");
 		}
 		assertNotNull(sireneConsumerSecret);
-		sireneClient = new SireneClientImpl(sireneUrl, sireneTimeout, sirenTokenRefreshUrl, sireneTokenValidity, sireneConsumerKey, sireneConsumerSecret);
+		sireneClient = new SireneClientImpl(sireneUrl, sireneTimeout, sirenTokenRefreshUrl, sireneTokenValidity, sireneConsumerKey, sireneConsumerSecret, initializeBearer);
 	}
 	
 	@Test
@@ -75,6 +79,19 @@ public class SireneClientTest {
 		JsonNode etablissement = rootNode.get("etablissement");
 		assertTrue(etablissement.has("siren") && etablissement.get("siren").asText().equals(IMC_SIREN));
 	}
+	
+	@Test
+	public void shouldFindSiretWithoutInitializedBearer() throws SireneClientException, MalformedURLException {
+		prepareSireneClient(false);
+		JsonNode rootNode = sireneClient.getBySiret(IMC_SIRET);
+		assertTrue(rootNode != null && rootNode.has("header"));
+		JsonNode header = rootNode.get("header");
+		assertTrue(header.has("statut") && header.get("statut").asInt() == 200);
+		assertTrue(rootNode.has("etablissement"));
+		JsonNode etablissement = rootNode.get("etablissement");
+		assertTrue(etablissement.has("siren") && etablissement.get("siren").asText().equals(IMC_SIREN));
+	}
+	
 	
 	@Test
 	public void shouldFailBecauseOfMalformedSiret() {
@@ -95,7 +112,6 @@ public class SireneClientTest {
 		
 		String invalidSiret = "30305423300126";
 		try {
-			
 			rootNode = sireneClient.getBySiret(invalidSiret);
 		} catch (SireneClientException e) {
 			assertTrue(e.getMessage().equals(String.format(ERROR_MESSAGE_INVALID_SIRET, invalidSiret)));

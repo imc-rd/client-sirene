@@ -48,7 +48,8 @@ public class SireneClientAutoconfiguration {
 	public SireneClient sireneClient() throws MalformedURLException, SireneClientException {
 		return new SireneClientImpl(configurationProperties.getUrl(), configurationProperties.getTimeout(),
 				configurationProperties.getTokenRefreshUrl(), configurationProperties.getTokenValidity(),
-				configurationProperties.getConsumerKey(), configurationProperties.getConsumerSecret());
+				configurationProperties.getConsumerKey(), configurationProperties.getConsumerSecret(),
+				configurationProperties.getInitializeTokenOnStartup());
 	}
 
 }
