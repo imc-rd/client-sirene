@@ -53,6 +53,7 @@ Les différents projets springboot permettent l'intégration au sein d'une appli
 [source,property]
 ----
 # CONFIGURATION API SIRENE
+sirene-client.initialize-token-on-startup=true
 sirene-client.url=https://api.insee.fr/entreprises/sirene/V3
 sirene-client.consumer-key=...
 sirene-client.consumer-secret=...
@@ -64,6 +65,9 @@ sirene-client.timeout:5000
 [cols="1s,3"]
 |===
 |*Propriété* | *Description*
+
+|sirene-client.initialize-token-on-startup
+|Raifraichissement ou non du token au démarrage
 
 |sirene-client.url
 |URL de l'API SIRENE V3
